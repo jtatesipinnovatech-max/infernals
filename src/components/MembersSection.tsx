@@ -72,6 +72,87 @@ const MEMBERS: Member[] = [
   }
 ];
 
+const MemberCard = ({ member, index }: { member: Member; index: number; key?: number }) => {
+  const [isActive, setIsActive] = React.useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="group relative"
+      onClick={() => setIsActive(!isActive)}
+    >
+      {/* Glow Effect behind card */}
+      <div className={`absolute inset-0 bg-biker-red/0 transition-all duration-500 rounded-2xl ${isActive ? 'bg-biker-red/10 blur-[40px]' : 'group-hover:bg-biker-red/10 group-hover:blur-[40px]'}`} />
+      
+      <div className={`relative z-10 h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-8 transition-all duration-500 overflow-hidden ${isActive ? 'scale-[1.05] border-biker-red/50' : 'group-hover:scale-[1.05] group-hover:border-biker-red/50'}`}>
+        
+        {/* Fire border effect on hover */}
+        <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+        
+        <div className="flex flex-col h-full">
+          {/* Top Half: Image with Overlay */}
+          <div className="relative h-64 -mx-8 -mt-8 mb-6 overflow-hidden">
+            <img 
+              src={member.image} 
+              alt={member.name}
+              className={`w-full h-full object-cover transition-all duration-700 ${isActive ? 'grayscale-0 scale-110' : 'grayscale group-hover:grayscale-0 group-hover:scale-110'}`}
+              referrerPolicy="no-referrer"
+            />
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-biker-black via-biker-black/40 to-transparent" />
+            
+            {/* Superimposed Info */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-left">
+              <div className="inline-block bg-biker-red text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2 shadow-lg">
+                {member.role}
+              </div>
+              <h3 className={`text-3xl font-display transition-colors leading-none mb-1 ${isActive ? 'text-biker-red' : 'group-hover:text-biker-red'}`}>
+                {member.name}
+              </h3>
+              <p className="text-biker-red/90 font-mono text-[10px] uppercase tracking-widest italic">
+                "{member.alias}"
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Half: Bike and Phrase */}
+          <div className="flex-1 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className={`flex flex-col items-start gap-1 bg-white/5 py-3 px-4 rounded-xl border border-white/5 transition-colors ${isActive ? 'border-biker-red/30' : 'group-hover:border-biker-red/30'}`}>
+                <span className="text-[9px] font-mono uppercase tracking-widest text-gray-500">La Máquina</span>
+                <div className="flex items-center gap-2">
+                  <Bike className="w-4 h-4 text-biker-red" />
+                  <span className="text-sm font-mono uppercase tracking-wider text-white">{member.bike}</span>
+                </div>
+              </div>
+
+              <p className={`text-gray-400 text-sm leading-relaxed italic transition-colors px-1 ${isActive ? 'text-gray-200' : 'group-hover:text-gray-200'}`}>
+                {member.phrase}
+              </p>
+            </div>
+
+            {/* Socials */}
+            <div className="flex items-center gap-4 pt-6 mt-6 border-t border-white/5 w-full justify-start">
+              <a href={member.socials.instagram} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href={member.socials.facebook} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
+                <Facebook className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Decorative corner accent */}
+        <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-biker-red/10 to-transparent transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+      </div>
+    </motion.div>
+  );
+};
+
 export const MembersSection = () => {
   return (
     <section className="py-32 bg-[#080808] relative overflow-hidden">
@@ -82,80 +163,7 @@ export const MembersSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {MEMBERS.map((member, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative"
-            >
-              {/* Glow Effect behind card */}
-              <div className="absolute inset-0 bg-biker-red/0 group-hover:bg-biker-red/10 blur-[40px] transition-all duration-500 rounded-2xl" />
-              
-              <div className="relative z-10 h-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-8 transition-all duration-500 group-hover:scale-[1.05] group-hover:border-biker-red/50 overflow-hidden">
-                
-                {/* Fire border effect on hover */}
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="flex flex-col h-full">
-                  {/* Top Half: Image with Overlay */}
-                  <div className="relative h-64 -mx-8 -mt-8 mb-6 overflow-hidden">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
-                      referrerPolicy="no-referrer"
-                    />
-                    {/* Dark Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-biker-black via-biker-black/40 to-transparent" />
-                    
-                    {/* Superimposed Info */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-left">
-                      <div className="inline-block bg-biker-red text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-2 shadow-lg">
-                        {member.role}
-                      </div>
-                      <h3 className="text-3xl font-display group-hover:text-biker-red transition-colors leading-none mb-1">
-                        {member.name}
-                      </h3>
-                      <p className="text-biker-red/90 font-mono text-[10px] uppercase tracking-widest italic">
-                        "{member.alias}"
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Bottom Half: Bike and Phrase */}
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div className="space-y-4">
-                      <div className="flex flex-col items-start gap-1 bg-white/5 py-3 px-4 rounded-xl border border-white/5 group-hover:border-biker-red/30 transition-colors">
-                        <span className="text-[9px] font-mono uppercase tracking-widest text-gray-500">La Máquina</span>
-                        <div className="flex items-center gap-2">
-                          <Bike className="w-4 h-4 text-biker-red" />
-                          <span className="text-sm font-mono uppercase tracking-wider text-white">{member.bike}</span>
-                        </div>
-                      </div>
-
-                      <p className="text-gray-400 text-sm leading-relaxed italic group-hover:text-gray-200 transition-colors px-1">
-                        {member.phrase}
-                      </p>
-                    </div>
-
-                    {/* Socials */}
-                    <div className="flex items-center gap-4 pt-6 mt-6 border-t border-white/5 w-full justify-start">
-                      <a href={member.socials.instagram} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110">
-                        <Instagram className="w-5 h-5" />
-                      </a>
-                      <a href={member.socials.facebook} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110">
-                        <Facebook className="w-5 h-5" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Decorative corner accent */}
-                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-biker-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </motion.div>
+            <MemberCard key={i} member={member} index={i} />
           ))}
         </div>
       </div>
