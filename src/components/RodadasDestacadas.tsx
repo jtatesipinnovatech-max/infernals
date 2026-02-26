@@ -18,7 +18,7 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "10/12/2023",
     location: "Jamundí, Valle del Cauca",
     description: "Nuestros motores rugieron llevando alegría. Una rodada cargada de solidaridad para los niños de Jamundí.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/donaton.jpg"
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/donaton_portada.jpeg"
   },
   {
     id: '2',
