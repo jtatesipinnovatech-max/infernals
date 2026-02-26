@@ -40,7 +40,7 @@ const MEMBERS: Member[] = [
     alias: "Logística y Orden",
     bike: "Yamaha MT03 v2",
     phrase: "La hermandad se construye con disciplina y lealtad.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/jhoana.jpeg",
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Jhoana.jpeg",
     socials: { instagram: "#", facebook: "#" }
   },
   {
@@ -49,7 +49,7 @@ const MEMBERS: Member[] = [
     alias: "Relaciones Públicas",
     bike: "Gixxer 250",
     phrase: "Nuestra potencia se traduce en ayuda y unión.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Angie.jpeg",
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Angiee.jpeg",
     socials: { instagram: "#", facebook: "#" }
   },
   {

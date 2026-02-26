@@ -18,7 +18,7 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "10/12/2023",
     location: "Jamundí, Valle del Cauca",
     description: "Nuestros motores rugieron llevando alegría. Una rodada cargada de solidaridad para los niños de Jamundí.",
-    image: "https://images.unsplash.com/photo-1531390844884-b936ad77a617?auto=format&fit=crop&q=80&w=800"
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/donaton.jpg"
   },
   {
     id: '2',
@@ -26,7 +26,7 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "25/01/2024",
     location: "Yumbo, Valle del Cauca",
     description: "Kilómetros de esperanza. Apoyamos con útiles escolares a la Fundación Yumbo, impulsando el futuro de los más pequeños.",
-    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800"
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/Portada.jpg"
   },
   {
     id: '3',
@@ -34,7 +34,7 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "15/02/2024",
     location: "Ginebra, Valle del Cauca",
     description: "Adrenalina pura en la ruta. Una rodada épica por los paisajes imponentes de Puente Piedra y Ginebra.",
-    image: "https://images.unsplash.com/photo-1558981403-c5f9199ad25e?auto=format&fit=crop&q=80&w=800"
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/puente_piedra.jpg"
   }
 ];
 
