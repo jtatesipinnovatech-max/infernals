@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400&family=Orbitron:wght@900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-logo: "Orbitron", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-biker-black: #000000;
+  --color-biker-gray: #111111;
+  --color-biker-red: #FF0000;
+  --color-biker-white: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply bg-biker-black text-white font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight uppercase;
+  }
+}
+
+.biker-card {
+  @apply bg-biker-gray border border-white/5 rounded-xl overflow-hidden transition-all duration-300 hover:border-biker-red/30;
+}
+
+.biker-btn {
+  @apply px-6 py-3 rounded-lg font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center justify-center gap-2;
+}
+
+.biker-btn-primary {
+  @apply bg-biker-red text-white hover:bg-white hover:text-black;
+}
+
+.biker-btn-outline {
+  @apply border-2 border-biker-red text-biker-red hover:bg-biker-red hover:text-white;
+}
+
+.logo-text-infernals {
+  @apply font-logo italic tracking-tighter;
+  -webkit-text-stroke: 1px white;
+  color: transparent;
+}
+
+.logo-text-bikers {
+  @apply font-logo italic tracking-tighter text-biker-red;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #FF0000;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #CC0000;
+}

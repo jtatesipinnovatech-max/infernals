@@ -1,0 +1,8 @@
+{
+  "name": "Infernal's Bikers",
+  "description": "La plataforma oficial del club de motociclistas Infernal's Bikers. Hermandad, lealtad y la carretera abierta.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
+
