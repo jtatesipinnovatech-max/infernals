@@ -1,5 +1,5 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
+import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import jwt from "jsonwebtoken";
@@ -60,15 +60,54 @@ db.exec(`
     status TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS applications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    id_number TEXT NOT NULL,
+    plate_number TEXT NOT NULL,
+    blood_type TEXT NOT NULL,
+    birth_date TEXT NOT NULL,
+    emergency_contact TEXT NOT NULL,
+    status TEXT DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 `);
 
 async function startServer() {
   const app = express();
   const PORT = 3000;
 
+  app.use(cors());
   app.use(express.json());
 
   // --- API ROUTES ---
+
+  // Applications
+  app.post("/api/applications", (req, res) => {
+    const { first_name, last_name, id_number, plate_number, blood_type, birth_date, emergency_contact } = req.body;
+    try {
+      const stmt = db.prepare(`
+        INSERT INTO applications (first_name, last_name, id_number, plate_number, blood_type, birth_date, emergency_contact)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `);
+      const info = stmt.run(first_name, last_name, id_number, plate_number, blood_type, birth_date, emergency_contact);
+      res.json({ id: info.lastInsertRowid, status: "success" });
+    } catch (e: any) {
+      console.error("Error saving application:", e);
+      res.status(500).json({ error: e.message });
+    }
+  });
+
+  app.get("/api/applications", (req, res) => {
+    try {
+      const applications = db.prepare("SELECT * FROM applications ORDER BY created_at DESC").all();
+      res.json(applications);
+    } catch (e: any) {
+      res.status(500).json({ error: e.message });
+    }
+  });
 
   // Auth
   app.post("/api/auth/register", async (req, res) => {
@@ -114,6 +153,7 @@ async function startServer() {
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Bike, Instagram, Facebook } from 'lucide-react';
+import { Bike, Instagram, Facebook, Music2 as Tiktok } from 'lucide-react';
 
 interface Member {
   name: string;
@@ -10,6 +10,7 @@ interface Member {
   phrase: string;
   image: string;
   socials: {
+    tiktok?: string;
     instagram?: string;
     facebook?: string;
   };
@@ -23,7 +24,11 @@ const MEMBERS: Member[] = [
     bike: "Gixxer 150 SF",
     phrase: "Rebelde por naturaleza, liderando con el corazón.",
     image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Jenni.jpeg",
-    socials: { instagram: "#", facebook: "#" }
+    socials: { 
+      tiktok: "https://www.tiktok.com/@jennii0905?_r=1&_t=ZS-94MOGimx5xF", 
+      instagram: "https://www.instagram.com/jennii0905?igsh=MWxsaXJlaXdmZXRpOA%3D%3D&utm_source=qr", 
+      facebook: "https://www.facebook.com/share/1DQJPC3cCq/?mibextid=wwXIfr" 
+    }
   },
   {
     name: "Juanse",
@@ -32,7 +37,11 @@ const MEMBERS: Member[] = [
     bike: "Yamaha MT-03",
     phrase: "Solidario por convicción, trazando cada ruta con honor.",
     image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/me.png",
-    socials: { instagram: "#", facebook: "#" }
+    socials: { 
+      tiktok: "https://www.tiktok.com/@_juansex?_r=1&_t=ZS-94MKpv2eHY8",
+      instagram: "https://www.instagram.com/_juansex?igsh=MTMzbWhwcWhhdTR0ZQ==", 
+      facebook: "https://www.facebook.com/share/188bkYxCS1/" 
+    }
   },
   {
     name: "Jhoana",
@@ -41,25 +50,11 @@ const MEMBERS: Member[] = [
     bike: "Yamaha MT03 v2",
     phrase: "La hermandad se construye con disciplina y lealtad.",
     image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Jhoana.jpeg",
-    socials: { instagram: "#", facebook: "#" }
-  },
-  {
-    name: "Angie",
-    role: "Admin",
-    alias: "Relaciones Públicas",
-    bike: "Gixxer 250",
-    phrase: "Nuestra potencia se traduce en ayuda y unión.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Angiee.jpeg",
-    socials: { instagram: "#", facebook: "#" }
-  },
-  {
-    name: "Yael",
-    role: "Admin",
-    alias: "Aux Redes",
-    bike: "Yamaha R15",
-    phrase: "Rodamos para dejar huella, no solo humo.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/yael.jpeg",
-    socials: { instagram: "#", facebook: "#" }
+    socials: { 
+      tiktok: "https://www.tiktok.com/@sagivr_16?_r=1&_t=ZS-94MO0ijScT6", 
+      instagram: "https://www.instagram.com/sagivr_16?igsh=MXg3anNqNDRrNDUzaA%3D%3D&utm_source=qr", 
+      facebook: "https://www.facebook.com/share/1CPrVzr3JU/?mibextid=wwXIfr" 
+    }
   },
   {
     name: "Edward",
@@ -68,7 +63,29 @@ const MEMBERS: Member[] = [
     bike: "Pulsar 160",
     phrase: "Código de acero, alma de león en cada kilómetro.",
     image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Edward.jpeg",
-    socials: { instagram: "#", facebook: "#" }
+    socials: { 
+      tiktok: "https://www.tiktok.com/@jhonpino8?_r=1&_t=ZS-94MLz4awJwA", 
+      instagram: "https://www.instagram.com/jhon_pino24?igsh=MXh5OGszd2VlajZpNg%3D%3D&utm_source=qr", 
+      facebook: "https://www.facebook.com/share/1AiREBaAFd/?mibextid=wwXIfr" 
+    }
+  },
+  {
+    name: "Yael",
+    role: "Admin",
+    alias: "Aux Redes",
+    bike: "Yamaha R15",
+    phrase: "Rodamos para dejar huella, no solo humo.",
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/yael.jpeg",
+    socials: { tiktok: "#", instagram: "#", facebook: "#" }
+  },
+  {
+    name: "Angie",
+    role: "Admin",
+    alias: "Relaciones Públicas",
+    bike: "Gixxer 250",
+    phrase: "Nuestra potencia se traduce en ayuda y unión.",
+    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Angiee.jpeg",
+    socials: { tiktok: "#", instagram: "#", facebook: "#" }
   }
 ];
 
@@ -136,12 +153,21 @@ const MemberCard = ({ member, index }: { member: Member; index: number; key?: nu
 
             {/* Socials */}
             <div className="flex items-center gap-4 pt-6 mt-6 border-t border-white/5 w-full justify-start">
-              <a href={member.socials.instagram} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href={member.socials.facebook} className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
-                <Facebook className="w-5 h-5" />
-              </a>
+              {member.socials.tiktok && (
+                <a href={member.socials.tiktok} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
+                  <Tiktok className="w-5 h-5" />
+                </a>
+              )}
+              {member.socials.instagram && (
+                <a href={member.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
+                  <Instagram className="w-5 h-5" />
+                </a>
+              )}
+              {member.socials.facebook && (
+                <a href={member.socials.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110" onClick={(e) => e.stopPropagation()}>
+                  <Facebook className="w-5 h-5" />
+                </a>
+              )}
             </div>
           </div>
         </div>

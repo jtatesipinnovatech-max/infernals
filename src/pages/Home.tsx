@@ -40,11 +40,18 @@ export const Home = () => {
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase
-        .from('applications')
-        .insert([formData]);
-
-      if (error) throw error;
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al enviar la solicitud');
+      }
 
       setIsModalOpen(false);
       setFormData({
@@ -61,8 +68,8 @@ export const Home = () => {
       window.open('https://chat.whatsapp.com/HZZs9rj3B16DFNkOlcNSx8', '_blank');
       alert('¡Solicitud enviada con éxito! Ahora serás redirigido al chat de WhatsApp.');
     } catch (error: any) {
-      console.error('Error submitting application:', error);
-      alert('Error al enviar la solicitud: ' + error.message);
+      console.error('Error submitting application to /api/applications:', error);
+      alert('Error al enviar la solicitud: ' + error.message + '\n\nPor favor, asegúrate de que el servidor esté funcionando y de que la URL sea correcta.');
     } finally {
       setIsSubmitting(false);
     }

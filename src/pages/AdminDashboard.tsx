@@ -11,6 +11,28 @@ export const AdminDashboard = () => {
     orders: 45,
     revenue: 12450
   });
+  const [applications, setApplications] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const response = await fetch('/api/applications');
+        if (response.ok) {
+          const data = await response.json();
+          setApplications(data);
+        }
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.role === 'admin' || user?.role === 'officer') {
+      fetchApplications();
+    }
+  }, [user]);
 
   if (user?.role !== 'admin' && user?.role !== 'officer') {
     return (
@@ -61,22 +83,27 @@ export const AdminDashboard = () => {
         <div className="biker-card p-8">
           <h3 className="text-xl mb-6">Solicitudes Recientes</h3>
           <div className="space-y-4">
-            {[
-              { name: 'Mike "Ghost" Miller', bike: 'Indian Scout', date: 'hace 2 horas' },
-              { name: 'Sarah "Blade" Connor', bike: 'Ducati Monster', date: 'hace 5 horas' },
-              { name: 'Jax Teller', bike: 'Harley Dyna', date: 'hace 1 día' },
-            ].map((app, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-                <div>
-                  <p className="font-bold">{app.name}</p>
-                  <p className="text-xs text-gray-500">{app.bike}</p>
+            {loading ? (
+              <p className="text-gray-500">Cargando solicitudes...</p>
+            ) : applications.length === 0 ? (
+              <p className="text-gray-500">No hay solicitudes pendientes.</p>
+            ) : (
+              applications.map((app, i) => (
+                <div key={i} className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                  <div>
+                    <p className="font-bold">{app.first_name} {app.last_name}</p>
+                    <p className="text-xs text-gray-500">{app.plate_number} - {app.blood_type}</p>
+                    <p className="text-[10px] text-gray-600 font-mono mt-1">
+                      {new Date(app.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-xs rounded-lg border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">Aprobar</button>
+                    <button className="px-3 py-1 bg-biker-red/10 text-biker-red text-xs rounded-lg border border-biker-red/20 hover:bg-biker-red/20 transition-colors">Denegar</button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <button className="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-xs rounded-lg border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">Aprobar</button>
-                  <button className="px-3 py-1 bg-biker-red/10 text-biker-red text-xs rounded-lg border border-biker-red/20 hover:bg-biker-red/20 transition-colors">Denegar</button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
