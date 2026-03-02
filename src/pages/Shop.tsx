@@ -105,13 +105,13 @@ const ProductCard = ({ product, index, onAddToCart }: ProductCardProps) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev + 1) % product.images.length);
   };
 
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev - 1 + product.images.length) % product.images.length);
   };
 
@@ -142,22 +142,33 @@ const ProductCard = ({ product, index, onAddToCart }: ProductCardProps) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="w-full h-full object-contain p-4"
+              className="w-full h-full object-contain p-4 cursor-grab active:cursor-grabbing touch-pan-y"
               referrerPolicy="no-referrer"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.7}
+              onDragEnd={(_, info) => {
+                const swipeThreshold = 50;
+                if (info.offset.x > swipeThreshold) {
+                  prevImage();
+                } else if (info.offset.x < -swipeThreshold) {
+                  nextImage();
+                }
+              }}
             />
           </AnimatePresence>
 
           {/* Slider Controls */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none">
             <button 
               onClick={prevImage}
-              className="p-1.5 rounded-full bg-black/50 text-white hover:bg-biker-red transition-colors"
+              className="p-1.5 rounded-full bg-black/50 text-white hover:bg-biker-red transition-colors pointer-events-auto"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button 
               onClick={nextImage}
-              className="p-1.5 rounded-full bg-black/50 text-white hover:bg-biker-red transition-colors"
+              className="p-1.5 rounded-full bg-black/50 text-white hover:bg-biker-red transition-colors pointer-events-auto"
             >
               <ChevronRight className="w-5 h-5" />
             </button>

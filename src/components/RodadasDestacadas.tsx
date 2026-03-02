@@ -246,6 +246,16 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
     return url.toLowerCase().match(/\.(mp4|webm|ogg|mov)$/) !== null;
   };
 
+  const videos = rodada.gallery?.filter(url => isVideo(url)) || [];
+  const photos = rodada.gallery?.filter(url => !isVideo(url)) || [];
+  
+  const mainVideo = videos.length > 0 ? videos[0] : null;
+  const otherMedia = [...videos.slice(1), ...photos];
+  
+  // Target minimum items for the grid to show "subir archivo" slots
+  const MIN_GRID_ITEMS = 8;
+  const emptySlotsCount = Math.max(0, MIN_GRID_ITEMS - otherMedia.length);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -294,43 +304,59 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
             </p>
           </div>
 
+          {/* Main Video Section */}
+          {mainVideo && (
+            <div className="mb-12 space-y-4">
+              <h3 className="text-sm font-mono uppercase tracking-[0.3em] text-biker-red border-l-2 border-biker-red pl-4">Video de Presentación</h3>
+              <div className="aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/5">
+                <video 
+                  src={mainVideo} 
+                  controls 
+                  className="w-full h-full object-contain"
+                  poster={rodada.image}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Gallery Grid */}
           <div className="space-y-8">
             <h3 className="text-sm font-mono uppercase tracking-[0.3em] text-biker-red border-l-2 border-biker-red pl-4">Galería de la Manada</h3>
             
-            {rodada.gallery && rodada.gallery.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {rodada.gallery.map((url, i) => (
-                  <div key={i} className="group relative rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-biker-red/50 transition-all duration-500 shadow-lg">
-                    {isVideo(url) ? (
-                      <video 
-                        src={url} 
-                        controls 
-                        className="w-full h-64 object-cover"
-                        poster={rodada.image}
-                      />
-                    ) : (
-                      <img 
-                        src={url} 
-                        alt={`Gallery ${i}`} 
-                        className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
-                        referrerPolicy="no-referrer"
-                        onError={(e) => {
-                          // Fallback for HEIC or broken images
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://images.unsplash.com/photo-1558981403-c5f91cbba527?auto=format&fit=crop&q=80&w=800';
-                        }}
-                      />
-                    )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {otherMedia.map((url, i) => (
+                <div key={i} className="group relative rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-biker-red/50 transition-all duration-500 shadow-lg">
+                  {isVideo(url) ? (
+                    <video 
+                      src={url} 
+                      controls 
+                      className="w-full h-64 object-cover"
+                    />
+                  ) : (
+                    <img 
+                      src={url} 
+                      alt={`Gallery ${i}`} 
+                      className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://images.unsplash.com/photo-1558981403-c5f91cbba527?auto=format&fit=crop&q=80&w=800';
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
+              
+              {/* Empty Slots */}
+              {Array.from({ length: emptySlotsCount }).map((_, i) => (
+                <div key={`empty-${i}`} className="flex flex-col items-center justify-center h-64 bg-white/[0.02] rounded-xl border border-dashed border-white/10 group hover:border-biker-red/30 transition-colors cursor-pointer">
+                  <div className="p-3 rounded-full bg-white/5 mb-3 group-hover:bg-biker-red/10 transition-colors">
+                    <ImageIcon className="w-6 h-6 text-gray-600 group-hover:text-biker-red/50" />
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
-                <ImageIcon className="w-12 h-12 text-gray-600 mb-4" />
-                <p className="text-gray-500 font-mono text-xs uppercase tracking-widest">Galería próximamente</p>
-              </div>
-            )}
+                  <p className="text-gray-600 font-mono text-[10px] uppercase tracking-widest group-hover:text-gray-400 transition-colors">subir archivo</p>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Footer */}
@@ -343,7 +369,7 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
               ))}
             </div>
             <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest italic">
-              Infernal's Bikers • Hermandad por Siempre
+              Infernal's Bikers • Hermandad por Siempre • {rodada.location}
             </p>
           </div>
         </div>
