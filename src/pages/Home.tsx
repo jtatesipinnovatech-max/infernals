@@ -49,8 +49,16 @@ export const Home = () => {
       });
       
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error al enviar la solicitud');
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error al enviar la solicitud');
+        } else {
+          // If not JSON, it's likely an HTML error page (404/500)
+          const text = await response.text();
+          console.error('Server returned non-JSON response:', text);
+          throw new Error(`Error del servidor (${response.status}). El servicio de registro podría estar temporalmente fuera de línea.`);
+        }
       }
 
       setIsModalOpen(false);
@@ -65,11 +73,14 @@ export const Home = () => {
       });
       
       // Redirect to WhatsApp group
-      window.open('https://chat.whatsapp.com/HZZs9rj3B16DFNkOlcNSx8', '_blank');
+      const whatsappUrl = 'https://chat.whatsapp.com/HZZs9rj3B16DFNkOlcNSx8';
       alert('¡Solicitud enviada con éxito! Ahora serás redirigido al chat de WhatsApp.');
+      
+      // Use window.location.href for better mobile compatibility as window.open is often blocked
+      window.location.href = whatsappUrl;
     } catch (error: any) {
       console.error('Error submitting application to /api/applications:', error);
-      alert('Error al enviar la solicitud: ' + error.message + '\n\nPor favor, asegúrate de que el servidor esté funcionando y de que la URL sea correcta.');
+      alert('Error al enviar la solicitud: ' + error.message + '\n\nSi el problema persiste, por favor contacta a un administrador directamente.');
     } finally {
       setIsSubmitting(false);
     }
