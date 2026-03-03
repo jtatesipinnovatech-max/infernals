@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar, MapPin, ArrowRight, ChevronDown, ChevronUp, X, Play, Image as ImageIcon } from 'lucide-react';
 
@@ -60,9 +60,9 @@ const INITIAL_RODADAS: Rodada[] = [
     image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/puente_piedra.jpg",
     gallery: [
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7189.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7218.HEIC",
+      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7218.jpg",
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7248.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7273.HEIC",
+      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7273.jpg",
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_8084.MOV",
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/MVIMG_20260222.jpg",
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/puente_piedra.jpg"
@@ -242,6 +242,21 @@ const RodadaCard = ({ rodada, index, isExtra = false, onOpen }: RodadaCardProps)
 };
 
 const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void }) => {
+  useEffect(() => {
+    // Block scroll on mount
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+    };
+  }, []);
+
   const isVideo = (url: string) => {
     return url.toLowerCase().match(/\.(mp4|webm|ogg|mov)$/) !== null;
   };
@@ -264,13 +279,13 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-biker-black/95 backdrop-blur-xl"
       onClick={onClose}
     >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto bg-biker-gray rounded-3xl border border-white/10 shadow-2xl custom-scrollbar"
-        onClick={(e) => e.stopPropagation()}
-      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          exit={{ scale: 0.9, opacity: 0, y: 20 }}
+          className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto overscroll-contain bg-biker-gray rounded-3xl border border-white/10 shadow-2xl custom-scrollbar"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Close Button */}
         <button 
           onClick={onClose}
@@ -362,11 +377,15 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
           {/* Footer */}
           <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex gap-8">
-              {['Facebook', 'Instagram', 'TikTok'].map((social) => (
-                <button key={social} className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-biker-red transition-colors">
-                  {social}
-                </button>
-              ))}
+              <a href="https://www.facebook.com/share/1CWoxt5ztS/" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-biker-red transition-colors">
+                Facebook
+              </a>
+              <a href="https://www.instagram.com/infernals_bikers?igsh=NW4zMTI0YTU4aHJw" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-biker-red transition-colors">
+                Instagram
+              </a>
+              <a href="https://www.tiktok.com/@infernals.bikers?_r=1&_t=ZS-94MnFdyDQj1" target="_blank" rel="noopener noreferrer" className="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-biker-red transition-colors">
+                TikTok
+              </a>
             </div>
             <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest italic">
               Infernal's Bikers • Hermandad por Siempre • {rodada.location}

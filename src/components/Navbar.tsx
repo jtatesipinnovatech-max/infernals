@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Calendar, ShoppingBag, LayoutDashboard, LogOut, Menu, X } from 'lucide-react';
+import { Shield, Calendar, ShoppingBag, LayoutDashboard, LogOut, Menu, X, Instagram, Facebook, Music2 as Tiktok } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -42,6 +42,17 @@ export const Navbar = () => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
+            <div className="flex items-center gap-4 mr-4 border-r border-white/10 pr-6">
+              <a href="https://www.tiktok.com/@infernals.bikers?_r=1&_t=ZS-94MnFdyDQj1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-biker-red transition-colors">
+                <Tiktok className="w-4 h-4" />
+              </a>
+              <a href="https://www.instagram.com/infernals_bikers?igsh=NW4zMTI0YTU4aHJw" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-biker-red transition-colors">
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a href="https://www.facebook.com/share/1CWoxt5ztS/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-biker-red transition-colors">
+                <Facebook className="w-4 h-4" />
+              </a>
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.path}

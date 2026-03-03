@@ -9,6 +9,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { Members } from './pages/Members';
+import { Instagram, Facebook, Music2 as Tiktok } from 'lucide-react';
 
 export default function App() {
   return (
@@ -28,11 +29,27 @@ export default function App() {
             </Routes>
           </main>
           
-          <footer className="bg-biker-black border-t border-white/5 py-12 mt-24">
-            <div className="max-w-7xl mx-auto px-4 text-center">
-              <p className="text-gray-600 text-sm font-mono uppercase tracking-widest">
-                © 2026 Infernal's Bikers • Hermandad por Siempre
-              </p>
+          <footer className="bg-biker-black border-t border-white/5 py-16 mt-24">
+            <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-8">
+              <div className="flex items-center gap-8">
+                <a href="https://www.tiktok.com/@infernals.bikers?_r=1&_t=ZS-94MnFdyDQj1" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110">
+                  <Tiktok className="w-6 h-6" />
+                </a>
+                <a href="https://www.instagram.com/infernals_bikers?igsh=NW4zMTI0YTU4aHJw" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110">
+                  <Instagram className="w-6 h-6" />
+                </a>
+                <a href="https://www.facebook.com/share/1CWoxt5ztS/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-biker-red transition-all hover:scale-110">
+                  <Facebook className="w-6 h-6" />
+                </a>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-600 text-sm font-mono uppercase tracking-widest mb-2">
+                  © 2026 Infernal's Bikers • Hermandad por Siempre
+                </p>
+                <p className="text-[10px] text-gray-700 font-mono uppercase tracking-[0.3em]">
+                  Valle del Cauca, Colombia
+                </p>
+              </div>
             </div>
           </footer>
         </div>
