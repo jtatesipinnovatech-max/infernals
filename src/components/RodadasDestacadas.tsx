@@ -76,7 +76,7 @@ const EXTRA_RODADAS: Rodada[] = [
     title: "Ruta del Sol Nocturna",
     date: "05/03/2024",
     location: "Vía Cali - Palmira",
-    description: "Bajo la luna y el rugir de los escapes. Una rodada nocturna para probar la resistencia de la manada.",
+    description: "Bajo la luna y el rugir de los escapes. Una rodada nocturna para probar la resistencia de la legión.",
     image: "https://images.unsplash.com/photo-1614165933026-0750fcd503e8?auto=format&fit=crop&q=80&w=800"
   },
   {
@@ -336,7 +336,7 @@ const RodadaModal = ({ rodada, onClose }: { rodada: Rodada; onClose: () => void 
 
           {/* Gallery Grid */}
           <div className="space-y-8">
-            <h3 className="text-sm font-mono uppercase tracking-[0.3em] text-biker-red border-l-2 border-biker-red pl-4">Galería de la Manada</h3>
+            <h3 className="text-sm font-mono uppercase tracking-[0.3em] text-biker-red border-l-2 border-biker-red pl-4">Galería de la Legión</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {otherMedia.map((url, i) => (

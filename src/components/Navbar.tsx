@@ -10,7 +10,7 @@ export const Navbar = () => {
   const location = useLocation();
 
   const navLinks = [
-    { name: 'Eventos', path: '/events', icon: Calendar },
+    { name: 'Programación', path: '/events', icon: Calendar },
     { name: 'Tienda', path: '/shop', icon: ShoppingBag },
     { name: 'Miembros', path: '/members', icon: Shield },
   ];
@@ -70,7 +70,7 @@ export const Navbar = () => {
               </button>
             ) : (
               <Link to="/login" className="biker-btn biker-btn-primary py-2 px-4 text-sm">
-                Unirse al Club
+                Registrarse
               </Link>
             )}
           </div>

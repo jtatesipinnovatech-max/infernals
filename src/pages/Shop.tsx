@@ -423,7 +423,7 @@ export const Shop = () => {
       >
         <h2 className="text-3xl font-display mb-6">Envíos a Todo el País</h2>
         <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-          Porta los colores de la manada con orgullo. Todos nuestros productos son de alta calidad, diseñados por y para bikers.
+          Porta los colores de la legión con orgullo. Todos nuestros productos son de alta calidad, diseñados por y para bikers.
         </p>
         <div className="flex flex-wrap justify-center gap-8">
           <div className="flex items-center gap-3 text-sm font-mono uppercase tracking-widest text-gray-500">

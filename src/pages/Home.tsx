@@ -126,17 +126,6 @@ export const Home = () => {
             <p className="text-xl text-white/80 mb-10 leading-relaxed max-w-xl font-sans mx-auto text-justify md:text-center">
               La lealtad es nuestro combustible. El respeto es nuestro camino. Únete a la hermandad más temida y respetada sobre dos ruedas.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="biker-btn biker-btn-primary"
-              >
-                Únete a la Manada <ChevronRight className="w-5 h-5" />
-              </button>
-              <Link to="/events" className="biker-btn biker-btn-outline">
-                Ver Calendario
-              </Link>
-            </div>
           </motion.div>
         </div>
       </section>
@@ -322,12 +311,12 @@ export const Home = () => {
               {
                 icon: Users,
                 title: "Hermandad",
-                desc: "Rugimos en manada. En el asfalto no hay lobos solitarios, solo una familia unida por el fuego y la lealtad."
+                desc: "Rugimos como legión. En el asfalto no hay leones solitarios, solo una familia unida por el fuego y la lealtad."
               },
               {
                 icon: Shield,
                 title: "Respeto",
-                desc: "Código de acero. Honramos los colores, la ruta y la memoria. Rebeldes ante el mundo, leales ante el hermano."
+                desc: "Código de acero. Honramos los colores, la ruta y la memoria. Rebeldes ante el mundo, leales ante la hermandad."
               },
               {
                 icon: Heart,
@@ -386,13 +375,18 @@ export const Home = () => {
           />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-4xl md:text-5xl mb-8 text-white">¿Listo para Rodar?</h2>
+          <h2 className="text-4xl md:text-5xl mb-8 text-white">¿Listo para unirte?</h2>
           <p className="text-xl text-gray-400 mb-10">
             Las solicitudes están abiertas para la temporada 2026. Comienza tu viaje de Prospecto a Leyenda.
           </p>
-          <Link to="/login" className="biker-btn biker-btn-primary px-12">
-            Aplica Ahora
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="biker-btn biker-btn-primary"
+            >
+              QUIERO UNIRME <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </section>
     </div>
