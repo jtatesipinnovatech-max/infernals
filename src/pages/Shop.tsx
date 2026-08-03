@@ -21,9 +21,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 130000,
     category: "Ropa",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/buso_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/buso_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/buso_back.png"
+      "/images/shop/buso_front.png",
+      "/images/shop/buso_diagonal.png",
+      "/images/shop/buso_back.png"
     ]
   },
   {
@@ -32,9 +32,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 45000,
     category: "Accesorios",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/gorra_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/gorra_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/gorra_back.png"
+      "/images/shop/gorra_front.png",
+      "/images/shop/gorra_diagonal.png",
+      "/images/shop/gorra_back.png"
     ]
   },
   {
@@ -43,9 +43,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 25000,
     category: "Accesorios",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/pasamonta_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/pasamonta_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/pasamonta_back.png"
+      "/images/shop/pasamonta_front.png",
+      "/images/shop/pasamonta_diagonal.png",
+      "/images/shop/pasamonta_back.png"
     ]
   },
   {
@@ -54,9 +54,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 100000,
     category: "Equipo",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/piernero_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/piernero_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/piernero_back.png"
+      "/images/shop/piernero_front.png",
+      "/images/shop/piernero_diagonal.png",
+      "/images/shop/piernero_back.png"
     ]
   },
   {
@@ -65,9 +65,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 15000,
     category: "Accesorios",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/llavero_full.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/llavero_leon.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/llavero_name.png"
+      "/images/shop/llavero_full.png",
+      "/images/shop/llavero_leon.png",
+      "/images/shop/llavero_name.png"
     ]
   },
   {
@@ -76,9 +76,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 100000,
     category: "Ropa",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/enterizo_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/enterizo_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/enterizo_back.png"
+      "/images/shop/enterizo_front.png",
+      "/images/shop/enterizo_diagonal.png",
+      "/images/shop/enterizo_back.png"
     ]
   },
   {
@@ -87,9 +87,9 @@ const PRODUCTS: ShopProduct[] = [
     price: 70000,
     category: "Ropa",
     images: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/polo_front.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/polo_diagonal.png",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/shop/catalogo/polo_back.png"
+      "/images/shop/polo_front.png",
+      "/images/shop/polo_diagonal.png",
+      "/images/shop/polo_back.png"
     ]
   }
 ];
