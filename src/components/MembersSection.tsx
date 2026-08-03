@@ -36,7 +36,7 @@ const MEMBERS: Member[] = [
     alias: "El Estratega",
     bike: "Yamaha MT-03",
     phrase: "Solidario por convicción, trazando cada ruta con honor.",
-    image: "/images/admins/me.png",
+    image: "/images/admins/me.jpg",
     socials: { 
       tiktok: "https://www.tiktok.com/@_juansex?_r=1&_t=ZS-94MKpv2eHY8",
       instagram: "https://www.instagram.com/_juansex?igsh=MTMzbWhwcWhhdTR0ZQ==", 
