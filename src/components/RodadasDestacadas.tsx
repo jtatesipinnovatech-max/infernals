@@ -20,14 +20,14 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "10/12/2023",
     location: "Jamundí, Valle del Cauca",
     description: "Nuestros motores rugieron llevando alegría. Una rodada cargada de solidaridad para los niños de Jamundí.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/donaton_portada.jpeg",
+    image: "/images/rodadas/obras_sociales/donaton_regalos_2025/donaton_portada.jpeg",
     gallery: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/2.jpeg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/4.jpeg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/6.jpeg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/7.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/8.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/altovelez_jamundi/vid1.mp4"
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/2.jpeg",
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/4.jpeg",
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/6.jpeg",
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/7.jpg",
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/8.jpg",
+      "/images/rodadas/obras_sociales/donaton_regalos_2025/vid1.mp4"
     ]
   },
   {
@@ -36,19 +36,18 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "25/01/2024",
     location: "Yumbo, Valle del Cauca",
     description: "Kilómetros de esperanza. Apoyamos con útiles escolares a la Fundación Yumbo, impulsando el futuro de los más pequeños.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/Portada.jpg",
+    image: "/images/rodadas/obras_sociales/kits_yumbo/Portada.jpg",
     gallery: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6619 (1).jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6622.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6638.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6660.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6671.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6672.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6674.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6675.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_6691.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/IMG_66999.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/kits_yumbo/Portada.jpeg.jpg"
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6619.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6622.mp4",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6638.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6660.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6671.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6672.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6674.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6675.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6691.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6699.jpg",
     ]
   },
   {
@@ -59,13 +58,13 @@ const INITIAL_RODADAS: Rodada[] = [
     description: "Adrenalina pura en la ruta. Una rodada épica por los paisajes imponentes de Puente Piedra y Ginebra.",
     image: "/images/rodadas/destacadas/ginebra/puente_piedra.jpg",
     gallery: [
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7189.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7218.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7248.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7273.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_8084.MOV",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/MVIMG_20260222.jpg",
-      "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/puente_piedra.jpg"
+      "/images/rodadas/destacadas/ginebra/IMG_7189.mp4",
+      "/images/rodadas/destacadas/ginebra/IMG_7218.jpg",
+      "/images/rodadas/destacadas/ginebra/IMG_7248.mp4",
+      "/images/rodadas/destacadas/ginebra/IMG_7273.jpg",
+      "/images/rodadas/destacadas/ginebra/IMG_8084.mp4",
+      "/images/rodadas/destacadas/ginebra/MVIMG_20260222_110219.jpg",
+      "/images/rodadas/destacadas/ginebra/puente_piedra.jpg"
     ]
   }
 ];
