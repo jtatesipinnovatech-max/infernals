@@ -84,6 +84,11 @@ async function startServer() {
 
   // --- API ROUTES ---
 
+  // Health check
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", mode: process.env.NODE_ENV || "development" });
+  });
+
   // Applications
   app.post("/api/applications", (req, res) => {
     const { first_name, last_name, id_number, plate_number, blood_type, birth_date, emergency_contact } = req.body;
@@ -159,6 +164,16 @@ async function startServer() {
       appType: "spa",
     });
     app.use(vite.middlewares);
+    app.get("*", async (req, res, next) => {
+      try {
+        const url = req.originalUrl;
+        const template = await vite.transformIndexHtml(url, await (await import("fs/promises")).readFile(path.join(__dirname, "index.html"), "utf-8"));
+        res.status(200).set({ "Content-Type": "text/html" }).end(template);
+      } catch (e) {
+        vite.ssrFixStacktrace(e as Error);
+        next(e);
+      }
+    });
   } else {
     app.use(express.static(path.join(__dirname, "dist")));
     app.get("*", (req, res) => {

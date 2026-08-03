@@ -19,6 +19,7 @@ export const Navbar = () => {
     navLinks.push({ name: 'Panel', path: '/dashboard', icon: LayoutDashboard });
     if (user?.role === 'admin' || user?.role === 'officer') {
       navLinks.push({ name: 'Admin', path: '/admin', icon: Shield });
+      navLinks.push({ name: 'Eventos', path: '/admin/eventos', icon: Calendar });
     }
   }
 
@@ -29,7 +30,7 @@ export const Navbar = () => {
           <Link to="/" className="flex items-center group">
             <div className="h-12 transition-transform group-hover:scale-105">
               <img 
-                src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/logos/only_name2.png" 
+                src="/images/logos/only_name2.png" 
                 alt="Infernal's Bikers" 
                 className="h-full w-auto object-contain"
                 onError={(e) => {
@@ -70,7 +71,7 @@ export const Navbar = () => {
               </button>
             ) : (
               <Link to="/login" className="biker-btn biker-btn-primary py-2 px-4 text-sm">
-                Registrarse
+                Acceso Oficial
               </Link>
             )}
           </div>

@@ -1,11 +1,12 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: 'member' | 'admin' | 'officer';
   rank: string;
   bike_model?: string;
   joined_at: string;
+  avatar_url?: string;
 }
 
 export interface ClubEvent {

@@ -9,8 +9,48 @@ export const Dashboard = () => {
   const { user } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: user?.name || '',
+    bike_model: user?.bike_model || ''
+  });
+  const [updating, setUpdating] = useState(false);
 
   if (!user) return null;
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setUpdating(true);
+      
+      // Actualizar tabla de perfiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ 
+          full_name: editForm.name,
+          bike_model: editForm.bike_model
+        })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
+      // También actualizar metadata de auth para consistencia
+      await supabase.auth.updateUser({
+        data: { 
+          full_name: editForm.name,
+          bike_model: editForm.bike_model
+        }
+      });
+      
+      setIsEditing(false);
+      alert('¡Perfil actualizado con éxito!');
+      window.location.reload(); // Recargar para ver cambios
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -36,8 +76,22 @@ export const Dashboard = () => {
         .from('club-assets')
         .getPublicUrl(filePath);
 
+      // Actualizar tabla de perfiles
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', user.id);
+
+      if (profileError) throw profileError;
+
+      // Actualizar metadata de auth
+      await supabase.auth.updateUser({
+        data: { avatar_url: publicUrl }
+      });
+
       setAvatarUrl(publicUrl);
-      alert('¡Imagen subida con éxito!');
+      alert('¡Foto de perfil actualizada con éxito!');
+      window.location.reload();
     } catch (error: any) {
       alert(error.message);
     } finally {
@@ -54,7 +108,7 @@ export const Dashboard = () => {
           <div className="biker-card p-8 text-center relative group">
             <div className="w-32 h-32 bg-biker-gray border-2 border-biker-red rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden relative">
               <img 
-                src={avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} 
+                src={avatarUrl || user.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} 
                 alt="Avatar"
                 className="w-full h-full object-cover"
               />
@@ -69,13 +123,63 @@ export const Dashboard = () => {
                 />
               </label>
             </div>
-            <h2 className="text-2xl mb-1">{user.name}</h2>
-            <span className="text-biker-red font-mono text-sm uppercase tracking-widest block mb-4">{user.rank}</span>
-            <div className="flex justify-center gap-2">
-              <span className="bg-white/5 px-3 py-1 rounded-full text-xs text-gray-400 border border-white/10">
-                {user.bike_model || "Custom Bobber"}
-              </span>
-            </div>
+            {isEditing ? (
+              <form onSubmit={handleUpdateProfile} className="space-y-4 text-left">
+                <div>
+                  <label className="text-[10px] text-gray-500 uppercase font-mono tracking-widest mb-1 block">Nombre Real</label>
+                  <input 
+                    type="text" 
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-biker-red outline-none"
+                    placeholder="Tu nombre real"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-gray-500 uppercase font-mono tracking-widest mb-1 block">Modelo de Moto</label>
+                  <input 
+                    type="text" 
+                    value={editForm.bike_model}
+                    onChange={(e) => setEditForm({ ...editForm, bike_model: e.target.value })}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-biker-red outline-none"
+                    placeholder="Ej: Custom Bobber"
+                  />
+                </div>
+                <div className="flex gap-2 pt-2">
+                  <button 
+                    type="button" 
+                    onClick={() => setIsEditing(false)}
+                    className="flex-1 bg-white/5 hover:bg-white/10 text-xs py-2 rounded-lg transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button 
+                    type="submit" 
+                    disabled={updating}
+                    className="flex-1 bg-biker-red hover:bg-red-700 text-white text-xs py-2 rounded-lg transition-colors disabled:opacity-50"
+                  >
+                    {updating ? 'Guardando...' : 'Guardar'}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <>
+                <h2 className="text-2xl mb-1">{user.name}</h2>
+                <span className="text-biker-red font-mono text-sm uppercase tracking-widest block mb-4">{user.rank}</span>
+                <div className="flex justify-center gap-2 mb-4">
+                  <span className="bg-white/5 px-3 py-1 rounded-full text-xs text-gray-400 border border-white/10">
+                    {user.bike_model || "Custom Bobber"}
+                  </span>
+                </div>
+                <button 
+                  onClick={() => setIsEditing(true)}
+                  className="text-xs text-gray-500 hover:text-white flex items-center gap-1 mx-auto transition-colors"
+                >
+                  <Settings className="w-3 h-3" /> Editar Perfil
+                </button>
+              </>
+            )}
           </div>
 
           <div className="biker-card p-6">

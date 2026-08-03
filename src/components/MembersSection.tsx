@@ -23,7 +23,7 @@ const MEMBERS: Member[] = [
     alias: "La Matriarca",
     bike: "Gixxer 150 SF",
     phrase: "Rebelde por naturaleza, liderando con el corazón.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Jenni.jpeg",
+    image: "/images/admins/jenni.jpeg",
     socials: { 
       tiktok: "https://www.tiktok.com/@jennii0905?_r=1&_t=ZS-94MOGimx5xF", 
       instagram: "https://www.instagram.com/jennii0905?igsh=MWxsaXJlaXdmZXRpOA%3D%3D&utm_source=qr", 
@@ -36,7 +36,7 @@ const MEMBERS: Member[] = [
     alias: "El Estratega",
     bike: "Yamaha MT-03",
     phrase: "Solidario por convicción, trazando cada ruta con honor.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/me.png",
+    image: "/images/admins/me.png",
     socials: { 
       tiktok: "https://www.tiktok.com/@_juansex?_r=1&_t=ZS-94MKpv2eHY8",
       instagram: "https://www.instagram.com/_juansex?igsh=MTMzbWhwcWhhdTR0ZQ==", 
@@ -49,7 +49,7 @@ const MEMBERS: Member[] = [
     alias: "Logística y Orden",
     bike: "Yamaha MT03 v2",
     phrase: "La hermandad se construye con disciplina y lealtad.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Jhoana.jpeg",
+    image: "/images/admins/jhoana.jpeg",
     socials: { 
       tiktok: "https://www.tiktok.com/@sagivr_16?_r=1&_t=ZS-94MO0ijScT6", 
       instagram: "https://www.instagram.com/sagivr_16?igsh=MXg3anNqNDRrNDUzaA%3D%3D&utm_source=qr", 
@@ -62,30 +62,12 @@ const MEMBERS: Member[] = [
     alias: "Manager de redes",
     bike: "Pulsar 160",
     phrase: "Código de acero, alma de león en cada kilómetro.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Edward.jpeg",
+    image: "/images/admins/Edward.jpeg",
     socials: { 
       tiktok: "https://www.tiktok.com/@jhonpino8?_r=1&_t=ZS-94MLz4awJwA", 
       instagram: "https://www.instagram.com/jhon_pino24?igsh=MXh5OGszd2VlajZpNg%3D%3D&utm_source=qr", 
       facebook: "https://www.facebook.com/share/1AiREBaAFd/?mibextid=wwXIfr" 
     }
-  },
-  {
-    name: "Yael",
-    role: "Admin",
-    alias: "Aux Redes",
-    bike: "Yamaha R15",
-    phrase: "Rodamos para dejar huella, no solo humo.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/yael.jpeg",
-    socials: { tiktok: "#", instagram: "#", facebook: "#" }
-  },
-  {
-    name: "Angie",
-    role: "Admin",
-    alias: "Relaciones Públicas",
-    bike: "Gixxer 250",
-    phrase: "Nuestra potencia se traduce en ayuda y unión.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/admins/Angiee.jpeg",
-    socials: { tiktok: "#", instagram: "#", facebook: "#" }
   }
 ];
 

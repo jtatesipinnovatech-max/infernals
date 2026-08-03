@@ -8,6 +8,7 @@ import { Events } from './pages/Events';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminEvents } from './pages/AdminEvents';
 import { Members } from './pages/Members';
 import { Instagram, Facebook, Music2 as Tiktok } from 'lucide-react';
 
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/events" element={<Events />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/eventos" element={<AdminEvents />} />
               <Route path="/login" element={<Login />} />
               <Route path="/members" element={<Members />} />
             </Routes>

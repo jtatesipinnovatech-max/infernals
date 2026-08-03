@@ -92,7 +92,7 @@ export const Home = () => {
       <section className="relative h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/dashboard/bikers.jpeg"
+            src="/images/dashboard/bikers.jpeg"
             alt="Biker Hero"
             className="w-full h-full object-cover opacity-50"
             referrerPolicy="no-referrer"
@@ -110,7 +110,7 @@ export const Home = () => {
             <div className="flex justify-center mb-8">
               <div className="w-48 h-48 md:w-64 md:h-64">
                 <img 
-                  src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/logos/logo_full.PNG" 
+                  src="/images/logos/logo_full.png" 
                   alt="Infernal's Logo" 
                   className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,0,0,0.4)]"
                   onError={(e) => {
@@ -368,7 +368,7 @@ export const Home = () => {
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/dashboard/bike_blue.jpg"
+            src="/images/dashboard/bike_blue.jpg"
             alt="Biker Night"
             className="w-full h-full object-cover opacity-20"
             referrerPolicy="no-referrer"

@@ -20,33 +20,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          name: session.user.user_metadata.name || session.user.email,
-          email: session.user.email!,
-          role: session.user.user_metadata.role || 'member',
-          rank: session.user.user_metadata.rank || 'Prospect',
-          bike_model: session.user.user_metadata.bike_model
-        });
+    const getInitialSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profile) {
+            setUser({
+              id: profile.id,
+              name: profile.full_name || session.user.email?.split('@')[0] || 'Biker',
+              email: profile.email || session.user.email!,
+              role: profile.role as any,
+              rank: profile.rank,
+              bike_model: profile.bike_model,
+              avatar_url: profile.avatar_url,
+              joined_at: session.user.created_at
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error getting initial session:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    });
+    };
+
+    getInitialSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session?.user) {
-        setUser({
-          id: session.user.id,
-          name: session.user.user_metadata.name || session.user.email,
-          email: session.user.email!,
-          role: session.user.user_metadata.role || 'member',
-          rank: session.user.user_metadata.rank || 'Prospect',
-          bike_model: session.user.user_metadata.bike_model
-        });
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile) {
+          setUser({
+            id: profile.id,
+            name: profile.full_name || session.user.email?.split('@')[0] || 'Biker',
+            email: profile.email || session.user.email!,
+            role: profile.role as any,
+            rank: profile.rank,
+            bike_model: profile.bike_model,
+            avatar_url: profile.avatar_url,
+            joined_at: session.user.created_at
+          });
+        }
       } else {
         setUser(null);
       }

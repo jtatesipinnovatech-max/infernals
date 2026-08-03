@@ -8,7 +8,7 @@ export const Members = () => {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/dashboard/bikers_back.jpeg"
+            src="/images/dashboard/bikers_back.jpeg"
             alt="Biker Background"
             className="w-full h-full object-cover opacity-20"
             referrerPolicy="no-referrer"

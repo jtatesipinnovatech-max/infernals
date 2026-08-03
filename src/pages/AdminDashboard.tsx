@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useAuth } from '../AuthContext';
-import { Users, Calendar, ShoppingBag, TrendingUp, AlertCircle } from 'lucide-react';
+import { supabase } from '../lib/supabase';
+import { Link } from 'react-router-dom';
+import { Users, Calendar, ShoppingBag, TrendingUp, AlertCircle, ArrowRight } from 'lucide-react';
 
 export const AdminDashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState({
     members: 124,
-    events: 8,
+    events: 0,
     orders: 45,
     revenue: 12450
   });
@@ -15,22 +17,32 @@ export const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchApplications = async () => {
+    const fetchStats = async () => {
       try {
+        // Fetch event count
+        const { count, error: eventError } = await supabase
+          .from('eventos')
+          .select('*', { count: 'exact', head: true });
+        
+        if (!eventError) {
+          setStats(prev => ({ ...prev, events: count || 0 }));
+        }
+
+        // Fetch applications
         const response = await fetch('/api/applications');
         if (response.ok) {
           const data = await response.json();
           setApplications(data);
         }
       } catch (error) {
-        console.error('Error fetching applications:', error);
+        console.error('Error fetching dashboard data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     if (user?.role === 'admin' || user?.role === 'officer') {
-      fetchApplications();
+      fetchStats();
     }
   }, [user]);
 
@@ -56,27 +68,62 @@ export const AdminDashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {[
-          { label: 'Total Miembros', value: stats.members, icon: Users, color: 'text-blue-500' },
-          { label: 'Eventos Activos', value: stats.events, icon: Calendar, color: 'text-biker-red' },
-          { label: 'Pedidos Pendientes', value: stats.orders, icon: ShoppingBag, color: 'text-purple-500' },
-          { label: 'Ingresos Mensuales', value: `$${stats.revenue}`, icon: TrendingUp, color: 'text-emerald-500' },
-        ].map((stat, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="biker-card p-6"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div className={`p-3 rounded-lg bg-white/5 ${stat.color}`}>
-                <stat.icon className="w-6 h-6" />
+          { label: 'Total Miembros', value: stats.members, icon: Users, color: 'text-blue-500', link: null },
+          { label: 'Eventos Activos', value: stats.events, icon: Calendar, color: 'text-biker-red', link: '/admin/eventos' },
+          { label: 'Pedidos Pendientes', value: stats.orders, icon: ShoppingBag, color: 'text-purple-500', link: null },
+          { label: 'Ingresos Mensuales', value: `$${stats.revenue}`, icon: TrendingUp, color: 'text-emerald-500', link: null },
+        ].map((stat, i) => {
+          const CardContent = (
+            <>
+              <div className="flex justify-between items-start mb-4">
+                <div className={`p-3 rounded-lg bg-white/5 ${stat.color}`}>
+                  <stat.icon className="w-6 h-6" />
+                </div>
+                {stat.link && (
+                  <div className="text-gray-600 group-hover:text-biker-red transition-colors">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
               </div>
-            </div>
-            <p className="text-xs text-gray-500 uppercase font-mono tracking-widest mb-1">{stat.label}</p>
-            <p className="text-3xl font-bold">{stat.value}</p>
-          </motion.div>
-        ))}
+              <p className="text-xs text-gray-500 uppercase font-mono tracking-widest mb-1">{stat.label}</p>
+              <div className="flex items-end justify-between">
+                <p className="text-3xl font-bold">{stat.value}</p>
+                {stat.link && (
+                  <span className="text-[10px] uppercase tracking-tighter text-biker-red opacity-0 group-hover:opacity-100 transition-opacity">
+                    Gestionar
+                  </span>
+                )}
+              </div>
+            </>
+          );
+
+          return stat.link ? (
+            <Link
+              key={i}
+              to={stat.link}
+              className="group"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="biker-card p-6 hover:border-biker-red/30 transition-all cursor-pointer h-full"
+              >
+                {CardContent}
+              </motion.div>
+            </Link>
+          ) : (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="biker-card p-6 h-full"
+            >
+              {CardContent}
+            </motion.div>
+          );
+        })}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
