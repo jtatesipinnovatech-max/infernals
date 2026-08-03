@@ -57,7 +57,7 @@ const INITIAL_RODADAS: Rodada[] = [
     date: "15/02/2024",
     location: "Ginebra, Valle del Cauca",
     description: "Adrenalina pura en la ruta. Una rodada épica por los paisajes imponentes de Puente Piedra y Ginebra.",
-    image: "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/obras_sociales/puente_piedra.jpg",
+    image: "/images/rodadas/destacadas/ginebra/puente_piedra.jpg",
     gallery: [
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7189.MOV",
       "https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/rodadas/ginebra/IMG_7218.jpg",
