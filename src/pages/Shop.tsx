@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingCart, Filter, Search, ChevronLeft, ChevronRight, Plus, Minus, X, CreditCard, Wallet } from 'lucide-react';
+import { ShoppingCart, Filter, Search, ChevronLeft, ChevronRight, Plus, Minus, X, CreditCard, Wallet, Lock, KeyRound } from 'lucide-react';
+import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ShopProduct {
   id: number;
@@ -231,8 +233,43 @@ const ProductCard = ({ product, index, onAddToCart }: ProductCardProps) => {
 };
 
 export const Shop = () => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="pt-36 pb-24 px-4 sm:px-6 lg:px-8 max-w-xl mx-auto text-center min-h-[70vh] flex flex-col justify-center items-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-biker-gray border border-biker-red/30 p-8 sm:p-10 rounded-3xl shadow-[0_0_40px_rgba(255,0,0,0.2)] w-full"
+        >
+          <div className="w-20 h-20 bg-biker-red/10 border border-biker-red/30 rounded-full flex items-center justify-center mx-auto mb-6 text-biker-red">
+            <Lock className="w-10 h-10" />
+          </div>
+
+          <h1 className="text-3xl font-display italic uppercase mb-3">
+            LA <span className="text-biker-red">ARMERÍA</span>
+          </h1>
+
+          <div className="bg-black/50 border border-white/5 p-4 rounded-xl mb-6">
+            <p className="text-gray-200 text-base font-sans leading-relaxed">
+              Debes ingresar con tus credenciales para desbloquear este servicio
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigate('/login')}
+            className="biker-btn biker-btn-primary w-full py-4 text-base flex items-center justify-center gap-2"
+          >
+            <KeyRound className="w-5 h-5" /> Ingresar con Credenciales
+          </button>
+        </motion.div>
+      </div>
+    );
+  }
 
   const addToCart = (product: ShopProduct, quantity: number) => {
     setCart(prev => {

@@ -20,7 +20,7 @@ const MEMBERS: Member[] = [
   {
     name: "Jenni",
     role: "Lideresa",
-    alias: "La Matriarca",
+    alias: "Gestión General",
     bike: "Gixxer 150 SF",
     phrase: "Rebelde por naturaleza, liderando con el corazón.",
     image: "/images/admins/jenni.jpeg",
@@ -33,10 +33,10 @@ const MEMBERS: Member[] = [
   {
     name: "Juanse",
     role: "Co-Lider",
-    alias: "El Estratega",
+    alias: "Dirección Operativa",
     bike: "Yamaha MT-03",
     phrase: "Solidario por convicción, trazando cada ruta con honor.",
-    image: "/images/admins/juanse.png",
+    image: "/images/admins/me.jpg",
     socials: { 
       tiktok: "https://www.tiktok.com/@_juansex?_r=1&_t=ZS-94MKpv2eHY8",
       instagram: "https://www.instagram.com/_juansex?igsh=MTMzbWhwcWhhdTR0ZQ==", 
@@ -45,8 +45,8 @@ const MEMBERS: Member[] = [
   },
   {
     name: "Jhoana",
-    role: "Admin",
-    alias: "Logística y Orden",
+    role: "Lider",
+    alias: "Gestión y Bienestar",
     bike: "Yamaha MT03 v2",
     phrase: "La hermandad se construye con disciplina y lealtad.",
     image: "/images/admins/jhoana.jpeg",
@@ -58,7 +58,7 @@ const MEMBERS: Member[] = [
   },
   {
     name: "Edward",
-    role: "Admin",
+    role: "Lider",
     alias: "Manager de redes",
     bike: "Pulsar 160",
     phrase: "Código de acero, alma de león en cada kilómetro.",
@@ -68,6 +68,42 @@ const MEMBERS: Member[] = [
       instagram: "https://www.instagram.com/jhon_pino24?igsh=MXh5OGszd2VlajZpNg%3D%3D&utm_source=qr", 
       facebook: "https://www.facebook.com/share/1AiREBaAFd/?mibextid=wwXIfr" 
     }
+  },
+  {
+    name: "Mario",
+    role: "Admin",
+    alias: "Operación y Desarrollo",
+    bike: "Pulsar NS200",
+    phrase: "Innovación y estrategia en cada trayecto de la hermandad.",
+    image: "/images/admins/Mario.jpg",
+    socials: {}
+  },
+  {
+    name: "Fabi",
+    role: "Admin",
+    alias: "Seguimiento e integración",
+    bike: "Yamaha R3",
+    phrase: "Compromiso constante para fortalecer la unión del club.",
+    image: "/images/admins/Fabi.jpg",
+    socials: {}
+  },
+  {
+    name: "Sthefanie",
+    role: "Admin",
+    alias: "Coordinadora de Experiencias",
+    bike: "KTM Duke 200",
+    phrase: "Creando momentos memorables en cada kilómetro recorrido.",
+    image: "/images/admins/Sthefanie.jpg",
+    socials: {}
+  },
+  {
+    name: "Kevin",
+    role: "Admin",
+    alias: "Filmación y Audiovisuales",
+    bike: "Dominar 400",
+    phrase: "Capturando la verdadera pasión y adrenalina de la carretera.",
+    image: "/images/admins/Kevin.jpeg",
+    socials: {}
   }
 ];
 

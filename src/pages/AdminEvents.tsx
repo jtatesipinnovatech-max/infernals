@@ -37,23 +37,35 @@ export const AdminEvents = () => {
 
   const fetchEvents = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('eventos')
-      .select('*')
-      .order('fecha', { ascending: true })
-      .order('hora', { ascending: true });
-    
-    if (error) {
-      console.error('Error fetching events:', error);
-    } else if (data) {
-      // Sort in client to be absolutely sure of the order
-      const sortedEvents = [...data].sort((a, b) => {
-        const dateA = new Date(`${a.fecha}T${a.hora || '00:00:00'}`).getTime();
-        const dateB = new Date(`${b.fecha}T${b.hora || '00:00:00'}`).getTime();
-        return dateA - dateB;
-      });
-      setEvents(sortedEvents);
+    let eventsData: any[] = [];
+    try {
+      const { data, error } = await supabase
+        .from('eventos')
+        .select('*');
+      if (!error && data && data.length > 0) {
+        eventsData = data;
+      }
+    } catch (e) {
+      console.warn('Supabase fetch failed');
     }
+
+    if (eventsData.length === 0) {
+      try {
+        const res = await fetch('/api/events');
+        if (res.ok) {
+          eventsData = await res.json();
+        }
+      } catch (e) {
+        console.error('API fetch error:', e);
+      }
+    }
+
+    const sortedEvents = [...eventsData].sort((a, b) => {
+      const dateA = new Date(`${a.fecha || a.date}T${a.hora || '00:00:00'}`).getTime();
+      const dateB = new Date(`${b.fecha || b.date}T${b.hora || '00:00:00'}`).getTime();
+      return dateA - dateB;
+    });
+    setEvents(sortedEvents);
     setLoading(false);
   };
 
