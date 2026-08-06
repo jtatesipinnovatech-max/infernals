@@ -14,10 +14,10 @@ export const Login = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (isAuthenticated && (user?.role === 'admin' || user?.role === 'officer')) {
-      navigate('/admin/eventos');
+    if (isAuthenticated) {
+      navigate('/dashboard');
     }
-  }, [isAuthenticated, user, navigate]);
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,18 +32,7 @@ export const Login = () => {
         return;
       }
 
-      // The useEffect will handle redirection, but we should check here too
-      // to show an error if they are NOT an admin/officer
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      const isAdminEmail = authUser?.email === 'jtates.ipinnovatech@gmail.com';
-      const role = isAdminEmail ? 'admin' : (authUser?.user_metadata?.role || 'member');
-
-      if (role !== 'admin' && role !== 'officer') {
-        setError('No tienes permisos de administrador para acceder a este panel.');
-        await logout(); // Log them out if they aren't authorized for admin
-      } else {
-        navigate('/admin/eventos');
-      }
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       setError('Ocurrió un error inesperado. Inténtalo de nuevo.');
@@ -79,8 +68,8 @@ export const Login = () => {
               }}
             />
           </div>
-          <p className="text-gray-500 text-sm">Acceso Administrativo</p>
-          <p className="text-gray-500 text-xs mt-1">Ingresa tus credenciales para gestionar los eventos del club.</p>
+          <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">Acceso Oficial de Miembros</p>
+          <p className="text-gray-500 text-xs mt-1">Ingresa tus credenciales para acceder al panel principal y desbloquear La Armería.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
