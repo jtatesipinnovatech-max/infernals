@@ -27,15 +27,15 @@ export const Login = () => {
     try {
       const { error: loginError } = await login(email, password);
       if (loginError) {
-        setError('Credenciales incorrectas. Acceso denegado.');
+        setError(loginError.message || 'Credenciales incorrectas en Supabase.');
         setIsLoading(false);
         return;
       }
 
       navigate('/dashboard');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError('Ocurrió un error inesperado. Inténtalo de nuevo.');
+      setError(err?.message || 'Ocurrió un error inesperado al conectar con Supabase.');
     } finally {
       setIsLoading(false);
     }

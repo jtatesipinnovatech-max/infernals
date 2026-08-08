@@ -13,35 +13,70 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const buildUserFromSupabase = (sUser: any, profile?: any): User => {
+  const metadata = sUser?.user_metadata || {};
+  const email = sUser?.email || '';
+  
+  let role = profile?.role || metadata.role;
+  if (!role) {
+    if (email === 'jtates.ipinnovatech@gmail.com' || email.includes('admin')) {
+      role = 'lider_general';
+    } else {
+      role = 'member';
+    }
+  }
+
+  return {
+    id: sUser.id,
+    name: profile?.full_name || metadata.full_name || metadata.name || email.split('@')[0] || 'Oficial Biker',
+    email: profile?.email || email,
+    role: role as any,
+    rank: profile?.rank || metadata.rank || (role === 'lider_general' ? 'Líder General' : 'Oficial Biker'),
+    bike_model: profile?.bike_model || metadata.bike_model || 'Motocicleta Oficial',
+    avatar_url: profile?.avatar_url || metadata.avatar_url,
+    joined_at: sUser.created_at || new Date().toISOString()
+  };
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
+    // Get initial session from Supabase
     const getInitialSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-        if (session?.user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
+        const { data: { session: supaSession } } = await supabase.auth.getSession();
+        if (supaSession?.user) {
+          setSession(supaSession);
+          let profile = null;
+          try {
+            const { data: prof } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', supaSession.user.id)
+              .single();
+            profile = prof;
+          } catch (e) {
+            // Profile table query optional
+          }
 
-          if (profile) {
-            setUser({
-              id: profile.id,
-              name: profile.full_name || session.user.email?.split('@')[0] || 'Biker',
-              email: profile.email || session.user.email!,
-              role: profile.role as any,
-              rank: profile.rank,
-              bike_model: profile.bike_model,
-              avatar_url: profile.avatar_url,
-              joined_at: session.user.created_at
-            });
+          const builtUser = buildUserFromSupabase(supaSession.user, profile);
+          setUser(builtUser);
+        } else {
+          // Check saved local session fallback if present
+          const savedSession = localStorage.getItem('biker_session');
+          if (savedSession) {
+            try {
+              const parsed = JSON.parse(savedSession);
+              if (parsed?.user) {
+                setUser(parsed.user);
+                setSession(parsed.session || parsed);
+              }
+            } catch (e) {
+              localStorage.removeItem('biker_session');
+            }
           }
         }
       } catch (error) {
@@ -53,45 +88,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     getInitialSession();
 
-    // Check saved local session if present
-    const savedSession = localStorage.getItem('biker_session');
-    if (savedSession) {
-      try {
-        const parsed = JSON.parse(savedSession);
-        setUser(parsed.user);
-        setSession(parsed);
-      } catch (e) {
-        localStorage.removeItem('biker_session');
-      }
-    }
-
-    // Listen for auth changes
+    // Listen for Supabase auth state changes
     let subscription: any = null;
     try {
-      const res = supabase.auth.onAuthStateChange(async (_event, session) => {
-        if (session) {
-          setSession(session);
-          if (session?.user) {
-            const { data: profile } = await supabase
+      const res = supabase.auth.onAuthStateChange(async (_event, supaSession) => {
+        if (supaSession?.user) {
+          setSession(supaSession);
+          let profile = null;
+          try {
+            const { data: prof } = await supabase
               .from('profiles')
               .select('*')
-              .eq('id', session.user.id)
+              .eq('id', supaSession.user.id)
               .single();
-
-            if (profile) {
-              const u: User = {
-                id: profile.id,
-                name: profile.full_name || session.user.email?.split('@')[0] || 'Biker',
-                email: profile.email || session.user.email!,
-                role: profile.role as any,
-                rank: profile.rank,
-                bike_model: profile.bike_model,
-                avatar_url: profile.avatar_url,
-                joined_at: session.user.created_at
-              };
-              setUser(u);
-            }
+            profile = prof;
+          } catch (e) {
+            // Profile table query optional
           }
+
+          const builtUser = buildUserFromSupabase(supaSession.user, profile);
+          setUser(builtUser);
+        } else if (_event === 'SIGNED_OUT') {
+          setUser(null);
+          setSession(null);
+          localStorage.removeItem('biker_session');
         }
       });
       subscription = res.data?.subscription;
@@ -107,65 +127,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    // 1. Try server API authentication
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
-      if (res.ok) {
-        const data = await res.json();
-        const loggedUser: User = {
-          id: String(data.user.id),
-          name: data.user.name,
-          email,
-          role: data.user.role || (email.includes('admin') || email === 'jtates.ipinnovatech@gmail.com' ? 'admin' : 'member'),
-          rank: data.user.rank || 'Oficial',
-          joined_at: data.user.joined_at || new Date().toISOString(),
-        };
-        const localSess = { user: loggedUser, token: data.token };
-        setUser(loggedUser);
-        setSession(localSess);
-        localStorage.setItem('biker_session', JSON.stringify(localSess));
+
+      const data = await res.json();
+
+      if (res.ok && data.user) {
+        setUser(data.user);
+        setSession(data.session || { user: data.user, token: data.token });
+        localStorage.setItem('biker_session', JSON.stringify({ user: data.user, session: data.session || data.token }));
         return { error: null };
+      } else {
+        return { error: new Error(data?.error || 'Correo o contraseña incorrectos. Verifica tus datos en Supabase.') };
       }
-    } catch (e) {
-      console.warn('API login call failed, trying Supabase or fallback');
+    } catch (e: any) {
+      console.error('Server login API error:', e);
+      return { error: new Error('Error al conectar con el servidor de autenticación.') };
     }
-
-    // 2. Try Supabase login if configured
-    try {
-      const { error, data } = await supabase.auth.signInWithPassword({ email, password });
-      if (!error && data?.session) {
-        return { error: null };
-      }
-    } catch (e) {
-      console.warn('Supabase login failed');
-    }
-
-    // 3. Admin / Demo Fallback credentials for previewing Admin panel
-    if (
-      email === 'jtates.ipinnovatech@gmail.com' ||
-      email === 'admin@infernalbikers.com' ||
-      email.startsWith('admin')
-    ) {
-      const loggedUser: User = {
-        id: '1',
-        name: email === 'jtates.ipinnovatech@gmail.com' ? 'Admin Officer' : 'Club Admin',
-        email,
-        role: 'admin',
-        rank: 'Presidente',
-        joined_at: new Date().toISOString(),
-      };
-      const localSess = { user: loggedUser, token: 'demo_token' };
-      setUser(loggedUser);
-      setSession(localSess);
-      localStorage.setItem('biker_session', JSON.stringify(localSess));
-      return { error: null };
-    }
-
-    return { error: new Error('Credenciales incorrectas. Acceso denegado.') };
   };
 
   const register = async (email: string, password: string, metadata: any) => {
@@ -173,24 +155,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: metadata?.full_name || email.split('@')[0], email, password, bike_model: metadata?.bike_model })
+        body: JSON.stringify({
+          name: metadata?.full_name || metadata?.name || email.split('@')[0],
+          email,
+          password,
+          bike_model: metadata?.bike_model
+        })
       });
+
+      const data = await res.json();
+
       if (res.ok) {
         return { error: null };
+      } else {
+        return { error: new Error(data?.error || 'Error al registrar usuario en Supabase.') };
       }
-    } catch (e) {
-      console.warn('API register error');
-    }
-
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: metadata }
-      });
-      return { error };
-    } catch (e) {
-      return { error: e };
+    } catch (e: any) {
+      console.error('Server register API error:', e);
+      return { error: new Error('Error al conectar con el servidor para el registro.') };
     }
   };
 
@@ -201,7 +183,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await supabase.auth.signOut();
     } catch (e) {
-      // Ignore if supabase not connected
+      // Ignore
     }
   };
 
@@ -219,3 +201,4 @@ export const useAuth = () => {
   }
   return context;
 };
+

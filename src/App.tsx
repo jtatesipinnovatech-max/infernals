@@ -10,6 +10,7 @@ import { Login } from './pages/Login';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminEvents } from './pages/AdminEvents';
 import { Members } from './pages/Members';
+import { RoleGuard } from './components/RoleGuard';
 import { Instagram, Facebook, Music2 as Tiktok } from 'lucide-react';
 
 export default function App() {
@@ -23,9 +24,21 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/events" element={<Events />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/eventos" element={<AdminEvents />} />
+              <Route path="/dashboard" element={
+                <RoleGuard requiredPath="/dashboard">
+                  <Dashboard />
+                </RoleGuard>
+              } />
+              <Route path="/admin" element={
+                <RoleGuard allowedRoles={['admin', 'lider_general', 'officer']} requiredPath="/admin">
+                  <AdminDashboard />
+                </RoleGuard>
+              } />
+              <Route path="/admin/eventos" element={
+                <RoleGuard allowedRoles={['admin', 'lider_general', 'director_operativo', 'officer', 'coordinador_redes']} requiredPath="/admin/eventos">
+                  <AdminEvents />
+                </RoleGuard>
+              } />
               <Route path="/login" element={<Login />} />
               <Route path="/members" element={<Members />} />
             </Routes>

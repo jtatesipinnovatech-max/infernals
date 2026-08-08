@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { useAuth } from '../AuthContext';
-import { Shield, CreditCard, Settings, History, Wallet, Camera, Loader2 } from 'lucide-react';
+import { Shield, CreditCard, Settings, History, Wallet, Camera, Loader2, Crown, Compass, HeartHandshake, Share2, UserCheck } from 'lucide-react';
 import { MemberCard } from '../components/MemberCard';
 import { supabase } from '../lib/supabase';
+import { 
+  LiderGeneralView, 
+  DirectorOperativoView, 
+  CoordinadoraBienestarView, 
+  CoordinadorRedesView 
+} from '../components/RoleDashboards';
+import { UserRole } from '../types';
 
 export const Dashboard = () => {
   const { user } = useAuth();
@@ -16,7 +23,13 @@ export const Dashboard = () => {
   });
   const [updating, setUpdating] = useState(false);
 
+  // Active role view state for leaders/admins
+  const initialRoleView: string = user?.role === 'member' ? 'member' : (user?.role || 'lider_general');
+  const [activeRoleView, setActiveRoleView] = useState<string>(initialRoleView);
+
   if (!user) return null;
+
+  const isLeadershipUser = user.role === 'admin' || user.role === 'officer' || user.role === 'lider_general' || user.role === 'director_operativo' || user.role === 'coordinadora_bienestar' || user.role === 'coordinador_redes';
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,7 +113,56 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+      
+      {/* Role View Selector for Administrators and Club Leaders */}
+      {isLeadershipUser && (
+        <div className="biker-card p-4 border border-biker-red/20 bg-black/60 backdrop-blur">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-3">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-biker-red" />
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                Mando de Líderes y Directivos
+              </h2>
+              <span className="text-[10px] font-mono text-gray-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                Acreditado
+              </span>
+            </div>
+            <p className="text-xs text-gray-400">
+              Selecciona el panel directivo para visualizar las herramientas específicas de cada cargo:
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: 'lider_general', name: 'Líder General', icon: Crown, color: 'hover:border-amber-500/50 text-amber-400' },
+              { id: 'director_operativo', name: 'Director Operativo', icon: Compass, color: 'hover:border-blue-500/50 text-blue-400' },
+              { id: 'coordinadora_bienestar', name: 'Coordinadora de Bienestar', icon: HeartHandshake, color: 'hover:border-emerald-500/50 text-emerald-400' },
+              { id: 'coordinador_redes', name: 'Coordinador de Redes', icon: Share2, color: 'hover:border-purple-500/50 text-purple-400' },
+              { id: 'member', name: 'Vista de Miembro', icon: UserCheck, color: 'hover:border-gray-500/50 text-gray-300' }
+            ].map((role) => {
+              const Icon = role.icon;
+              const isActive = activeRoleView === role.id || (activeRoleView === 'admin' && role.id === 'lider_general') || (activeRoleView === 'officer' && role.id === 'lider_general');
+              return (
+                <button
+                  key={role.id}
+                  onClick={() => setActiveRoleView(role.id)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all border ${role.color} ${
+                    isActive
+                      ? 'bg-biker-red text-white border-biker-red font-bold shadow-lg shadow-biker-red/20'
+                      : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {role.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Profile Sidebar + Content Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Profile Sidebar */}
@@ -193,67 +255,79 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Dynamic Main Content based on Selected Active Role View */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="biker-card p-6 flex items-center gap-6">
-              <div className="w-12 h-12 bg-biker-red/10 rounded-xl flex items-center justify-center">
-                <CreditCard className="text-biker-red w-6 h-6" />
+          {activeRoleView === 'director_operativo' ? (
+            <DirectorOperativoView />
+          ) : activeRoleView === 'coordinadora_bienestar' ? (
+            <CoordinadoraBienestarView />
+          ) : activeRoleView === 'coordinador_redes' ? (
+            <CoordinadorRedesView />
+          ) : activeRoleView === 'lider_general' || activeRoleView === 'admin' || activeRoleView === 'officer' ? (
+            <LiderGeneralView />
+          ) : (
+            <>
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="biker-card p-6 flex items-center gap-6">
+                  <div className="w-12 h-12 bg-biker-red/10 rounded-xl flex items-center justify-center">
+                    <CreditCard className="text-biker-red w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase mb-1">Estado de Cuotas</p>
+                    <p className="text-xl font-bold text-emerald-500">Al Día</p>
+                  </div>
+                </div>
+                <div className="biker-card p-6 flex items-center gap-6">
+                  <div className="w-12 h-12 bg-biker-red/10 rounded-xl flex items-center justify-center">
+                    <History className="text-biker-red w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase mb-1">Kilómetros Registrados</p>
+                    <p className="text-xl font-bold">12,482 km</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase mb-1">Estado de Cuotas</p>
-                <p className="text-xl font-bold text-emerald-500">Al Día</p>
-              </div>
-            </div>
-            <div className="biker-card p-6 flex items-center gap-6">
-              <div className="w-12 h-12 bg-biker-red/10 rounded-xl flex items-center justify-center">
-                <History className="text-biker-red w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 uppercase mb-1">Kilómetros Registrados</p>
-                <p className="text-xl font-bold">12,482 km</p>
-              </div>
-            </div>
-          </div>
 
-          {/* Financial Section */}
-          <div className="biker-card p-8">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl">Centro Financiero</h3>
-              <button className="text-sm text-biker-red hover:underline">Ver Historial Completo</button>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-biker-black rounded-lg flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-gray-400" />
+              {/* Financial Section */}
+              <div className="biker-card p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-2xl">Centro Financiero</h3>
+                  <button className="text-sm text-biker-red hover:underline">Ver Historial Completo</button>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-biker-black rounded-lg flex items-center justify-center">
+                        <Settings className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Cuota Mensual - Marzo</p>
+                        <p className="text-xs text-gray-500">Pagado automáticamente el 1 de mar, 2026</p>
+                      </div>
+                    </div>
+                    <span className="font-mono text-emerald-500">-$45.00</span>
                   </div>
-                  <div>
-                    <p className="font-medium">Cuota Mensual - Marzo</p>
-                    <p className="text-xs text-gray-500">Pagado automáticamente el 1 de mar, 2026</p>
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-biker-black rounded-lg flex items-center justify-center">
+                        <ShoppingBag className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Tienda del Club: Chaleco de Cuero</p>
+                        <p className="text-xs text-gray-500">24 de feb, 2026</p>
+                      </div>
+                    </div>
+                    <span className="font-mono text-emerald-500">-$189.99</span>
                   </div>
                 </div>
-                <span className="font-mono text-emerald-500">-$45.00</span>
-              </div>
-              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-biker-black rounded-lg flex items-center justify-center">
-                    <ShoppingBag className="w-5 h-5 text-gray-400" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Tienda del Club: Chaleco de Cuero</p>
-                    <p className="text-xs text-gray-500">24 de feb, 2026</p>
-                  </div>
+                <div className="mt-8 pt-8 border-t border-white/5 flex gap-4">
+                  <button className="biker-btn biker-btn-primary flex-1">Contribuir al Fondo</button>
+                  <button className="biker-btn biker-btn-outline flex-1">Descargar Reporte</button>
                 </div>
-                <span className="font-mono text-emerald-500">-$189.99</span>
               </div>
-            </div>
-            <div className="mt-8 pt-8 border-t border-white/5 flex gap-4">
-              <button className="biker-btn biker-btn-primary flex-1">Contribuir al Fondo</button>
-              <button className="biker-btn biker-btn-outline flex-1">Descargar Reporte</button>
-            </div>
-          </div>
+            </>
+          )}
         </div>
 
       </div>

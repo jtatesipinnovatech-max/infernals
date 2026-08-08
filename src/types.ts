@@ -1,12 +1,24 @@
+export type UserRole = 
+  | 'member' 
+  | 'admin' 
+  | 'officer' 
+  | 'lider_general' 
+  | 'director_operativo' 
+  | 'coordinadora_bienestar' 
+  | 'coordinador_redes';
+
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'member' | 'admin' | 'officer';
+  role: UserRole;
   rank: string;
   bike_model?: string;
   joined_at: string;
   avatar_url?: string;
+  blood_type?: string;
+  emergency_contact?: string;
+  plate_number?: string;
 }
 
 export interface ClubEvent {

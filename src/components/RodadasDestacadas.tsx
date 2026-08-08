@@ -72,11 +72,19 @@ const INITIAL_RODADAS: Rodada[] = [
 const EXTRA_RODADAS: Rodada[] = [
   {
     id: '4',
-    title: "Ruta del Sol Nocturna",
-    date: "05/03/2024",
-    location: "Vía Cali - Palmira",
-    description: "Bajo la luna y el rugir de los escapes. Una rodada nocturna para probar la resistencia de la legión.",
-    image: "https://images.unsplash.com/photo-1614165933026-0750fcd503e8?auto=format&fit=crop&q=80&w=800"
+    title: "Rodada a Medellín y Guatapé",
+    date: "12/10/2024",
+    location: "Medellín y Guatapé, Antioquia",
+    description: "Una aventura inolvidable con la legión conquistando la Ciudad de la Eterna Primavera y la majestuosa Piedra del Peñol en Guatapé.",
+    image: "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
+    gallery: [
+      "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/Group_medellin.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/grupo_noche.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/hotel.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/motos.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/infernal_girl.png"
+    ]
   },
   {
     id: '5',
