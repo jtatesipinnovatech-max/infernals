@@ -32,22 +32,18 @@ const INITIAL_RODADAS: Rodada[] = [
   },
   {
     id: '2',
-    title: "Útiles para Fundación Yumbo",
-    date: "25/01/2024",
-    location: "Yumbo, Valle del Cauca",
-    description: "Kilómetros de esperanza. Apoyamos con útiles escolares a la Fundación Yumbo, impulsando el futuro de los más pequeños.",
-    image: "/images/rodadas/obras_sociales/kits_yumbo/Portada.jpg",
+    title: "Rodada a Medellín y Guatapé",
+    date: "12/10/2024",
+    location: "Medellín y Guatapé, Antioquia",
+    description: "Una aventura inolvidable con la legión conquistando la Ciudad de la Eterna Primavera y la majestuosa Piedra del Peñol en Guatapé.",
+    image: "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
     gallery: [
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6619.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6622.mp4",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6638.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6660.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6671.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6672.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6674.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6675.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6691.jpg",
-      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6699.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/Group_medellin.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/grupo_noche.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/hotel.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/motos.jpg",
+      "/images/rodadas/destacadas/Rodada-Medellin/infernal_girl.png"
     ]
   },
   {
@@ -72,18 +68,22 @@ const INITIAL_RODADAS: Rodada[] = [
 const EXTRA_RODADAS: Rodada[] = [
   {
     id: '4',
-    title: "Rodada a Medellín y Guatapé",
-    date: "12/10/2024",
-    location: "Medellín y Guatapé, Antioquia",
-    description: "Una aventura inolvidable con la legión conquistando la Ciudad de la Eterna Primavera y la majestuosa Piedra del Peñol en Guatapé.",
-    image: "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
+    title: "Útiles para Fundación Yumbo",
+    date: "25/01/2024",
+    location: "Yumbo, Valle del Cauca",
+    description: "Kilómetros de esperanza. Apoyamos con útiles escolares a la Fundación Yumbo, impulsando el futuro de los más pequeños.",
+    image: "/images/rodadas/obras_sociales/kits_yumbo/Portada.jpg",
     gallery: [
-      "/images/rodadas/destacadas/Rodada-Medellin/guatape.jpg",
-      "/images/rodadas/destacadas/Rodada-Medellin/Group_medellin.jpg",
-      "/images/rodadas/destacadas/Rodada-Medellin/grupo_noche.jpg",
-      "/images/rodadas/destacadas/Rodada-Medellin/hotel.jpg",
-      "/images/rodadas/destacadas/Rodada-Medellin/motos.jpg",
-      "/images/rodadas/destacadas/Rodada-Medellin/infernal_girl.png"
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6619.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6622.mp4",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6638.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6660.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6671.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6672.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6674.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6675.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6691.jpg",
+      "/images/rodadas/obras_sociales/kits_yumbo/IMG_6699.jpg",
     ]
   },
   {
