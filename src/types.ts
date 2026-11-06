@@ -5,7 +5,8 @@ export type UserRole =
   | 'lider_general' 
   | 'director_operativo' 
   | 'coordinadora_bienestar' 
-  | 'coordinador_redes';
+  | 'coordinador_redes'
+  | 'coordinadora_experiencias';
 
 export interface User {
   id: string;

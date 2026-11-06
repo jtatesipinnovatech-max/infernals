@@ -35,11 +35,11 @@ export const MemberCard: React.FC<MemberCardProps> = ({ name, rank, memberId, ex
         <div className="flex items-center gap-3 mb-8">
           <div className="h-10">
             <img 
-              src="https://cxcpaumlcrxvlapjjcmf.supabase.co/storage/v1/object/public/club-assets/logos/logo_full.PNG" 
+              src="/images/logos/logo_full.png" 
               alt="Logo Small" 
               className="h-full w-auto object-contain"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://www.svgrepo.com/show/415020/skull.svg';
+                (e.target as HTMLImageElement).src = '/logo-main.png';
               }}
             />
           </div>

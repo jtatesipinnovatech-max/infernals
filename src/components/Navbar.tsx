@@ -19,7 +19,7 @@ export const Navbar = () => {
 
   if (isAuthenticated) {
     navLinks.push({ name: 'Panel', path: '/dashboard', icon: LayoutDashboard });
-    if (user?.role === 'admin' || user?.role === 'officer') {
+    if (user?.role === 'admin' || user?.role === 'officer' || user?.role === 'lider_general') {
       navLinks.push({ name: 'Admin', path: '/admin', icon: Shield });
       navLinks.push({ name: 'Eventos', path: '/admin/eventos', icon: Calendar });
     }

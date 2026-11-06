@@ -140,12 +140,14 @@ export const AdminEvents = () => {
     setIsModalOpen(true);
   };
 
-  if (user?.role !== 'admin' && user?.role !== 'officer') {
+  const canManageEvents = ['admin', 'officer', 'lider_general', 'director_operativo', 'coordinador_redes'].includes(user?.role || '');
+
+  if (!canManageEvents) {
     return (
       <div className="pt-32 text-center">
         <AlertCircle className="w-16 h-16 text-biker-red mx-auto mb-4" />
         <h2 className="text-2xl">Acceso Denegado</h2>
-        <p className="text-gray-500">Solo los oficiales del club pueden acceder a este panel.</p>
+        <p className="text-gray-500">Solo los oficiales y directivos autorizados del club pueden acceder a este panel.</p>
       </div>
     );
   }

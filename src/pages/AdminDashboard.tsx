@@ -41,12 +41,12 @@ export const AdminDashboard = () => {
       }
     };
 
-    if (user?.role === 'admin' || user?.role === 'officer') {
+    if (user?.role === 'admin' || user?.role === 'officer' || user?.role === 'lider_general') {
       fetchStats();
     }
   }, [user]);
 
-  if (user?.role !== 'admin' && user?.role !== 'officer') {
+  if (user?.role !== 'admin' && user?.role !== 'officer' && user?.role !== 'lider_general') {
     return (
       <div className="pt-32 text-center">
         <AlertCircle className="w-16 h-16 text-biker-red mx-auto mb-4" />

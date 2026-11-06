@@ -9,6 +9,7 @@ interface Member {
   bike: string;
   phrase: string;
   image: string;
+  hidden?: boolean;
   socials: {
     tiktok?: string;
     instagram?: string;
@@ -24,6 +25,7 @@ const MEMBERS: Member[] = [
     bike: "Gixxer 150 SF",
     phrase: "Rebelde por naturaleza, liderando con el corazón.",
     image: "/images/admins/jenni.jpeg",
+    hidden: true,
     socials: { 
       tiktok: "https://www.tiktok.com/@jennii0905?_r=1&_t=ZS-94MOGimx5xF", 
       instagram: "https://www.instagram.com/jennii0905?igsh=MWxsaXJlaXdmZXRpOA%3D%3D&utm_source=qr", 
@@ -35,7 +37,7 @@ const MEMBERS: Member[] = [
     role: "Co-Lider",
     alias: "Dirección Operativa",
     bike: "Yamaha MT-03",
-    phrase: "Solidario por convicción, trazando cada ruta con honor.",
+    phrase: "Direccion y promocion de actividades, convenios y rodadas.",
     image: "/images/admins/me.jpg",
     socials: { 
       tiktok: "https://www.tiktok.com/@_juansex?_r=1&_t=ZS-94MKpv2eHY8",
@@ -47,8 +49,8 @@ const MEMBERS: Member[] = [
     name: "Jhoana",
     role: "Lider",
     alias: "Gestión y Bienestar",
-    bike: "Yamaha MT03 v2",
-    phrase: "La hermandad se construye con disciplina y lealtad.",
+    bike: "CFMOTO 250nk",
+    phrase: "Seguimiento de integrantes de filtro, registros y asistencias.",
     image: "/images/admins/jhoana.jpeg",
     socials: { 
       tiktok: "https://www.tiktok.com/@sagivr_16?_r=1&_t=ZS-94MO0ijScT6", 
@@ -61,7 +63,7 @@ const MEMBERS: Member[] = [
     role: "Lider",
     alias: "Manager de redes",
     bike: "Pulsar 160",
-    phrase: "Código de acero, alma de león en cada kilómetro.",
+    phrase: "Produccion y gestion de contenido multimedia para redes sociales.",
     image: "/images/admins/Edward.jpeg",
     socials: { 
       tiktok: "https://www.tiktok.com/@jhonpino8?_r=1&_t=ZS-94MLz4awJwA", 
@@ -76,6 +78,7 @@ const MEMBERS: Member[] = [
     bike: "Pulsar NS200",
     phrase: "Innovación y estrategia en cada trayecto de la hermandad.",
     image: "/images/admins/Mario.jpg",
+    hidden: true,
     socials: {}
   },
   {
@@ -85,16 +88,21 @@ const MEMBERS: Member[] = [
     bike: "Yamaha R3",
     phrase: "Compromiso constante para fortalecer la unión del club.",
     image: "/images/admins/Fabi.jpg",
+    hidden: true,
     socials: {}
   },
   {
-    name: "Sthefanie",
+    name: "Laurenth",
     role: "Admin",
     alias: "Coordinadora de Experiencias",
-    bike: "KTM Duke 200",
-    phrase: "Creando momentos memorables en cada kilómetro recorrido.",
+    bike: "Hero Hunk 125R",
+    phrase: "Creando momentos, liderando espacios y promoviendo experiencias memorables.",
     image: "/images/admins/Sthefanie.jpg",
-    socials: {}
+    socials: {
+      tiktok: "https://www.tiktok.com/@laurenth.0914?_r=1&_t=ZS-9BBgqdVs1ye",
+      instagram: "https://www.instagram.com/sthefanie.1409?xtok=YTZwZXpnNzR2MGsy&utm_source=qr",
+      facebook: "https://www.facebook.com/share/19ig3gb43F/?mibextid=wwXIfr"
+    }
   },
   {
     name: "Kevin",
@@ -103,11 +111,12 @@ const MEMBERS: Member[] = [
     bike: "Dominar 400",
     phrase: "Capturando la verdadera pasión y adrenalina de la carretera.",
     image: "/images/admins/Kevin.jpeg",
+    hidden: true,
     socials: {}
   }
 ];
 
-const MemberCard = ({ member, index }: { member: Member; index: number; key?: number }) => {
+const MemberCard: React.FC<{ member: Member; index: number }> = ({ member, index }) => {
   const [isActive, setIsActive] = React.useState(false);
 
   return (
@@ -206,8 +215,8 @@ export const MembersSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {MEMBERS.map((member, i) => (
-            <MemberCard key={i} member={member} index={i} />
+          {MEMBERS.filter((member) => !member.hidden).map((member, i) => (
+            <MemberCard key={member.name} member={member} index={i} />
           ))}
         </div>
       </div>

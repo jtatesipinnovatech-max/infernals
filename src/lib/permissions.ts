@@ -45,6 +45,13 @@ export class RolePermissions {
       badgeColor: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
       allowedRoutes: ['/dashboard', '/admin/eventos', '/events']
     },
+    coordinadora_experiencias: {
+      id: 'coordinadora_experiencias',
+      title: 'Coordinadora de Experiencias',
+      description: 'Momentos memorables, espacios de integración, hospedajes, dinámicas y cumpleaños.',
+      badgeColor: 'bg-rose-500/10 text-rose-500 border-rose-500/20',
+      allowedRoutes: ['/dashboard', '/members', '/events', '/shop']
+    },
     officer: {
       id: 'officer',
       title: 'Oficial del Club',
